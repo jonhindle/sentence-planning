@@ -152,6 +152,7 @@ jobs:
               --set image.tag="${APP_VERSION}"
 
   deploy_prod:
+    <<: *defaults
     steps:
       - run:
           name: Demo prod deployment 
