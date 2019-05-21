@@ -168,23 +168,23 @@ workflows:
     - test:
         requires:
         - build
-    - build_docker:
-        requires:
-        - test
-        filters:
-          branches:
-            only:
-            - master
-    - copy_image_to_ecs:
-        requires:
-          - build_docker
-    - deploy_dev:
-        requires:
-          - copy_image_to_ecs
+#    - build_docker:
+#        requires:
+#        - test
+#        filters:
+#          branches:
+#            only:
+#            - master
+#    - copy_image_to_ecs:
+#        requires:
+#          - build_docker
+#    - deploy_dev:
+#        requires:
+#          - copy_image_to_ecs
     - request-prod-approval:
           type: approval
-          requires:
-            - deploy_dev
+#          requires:
+#            - deploy_dev
     - deploy_prod:
         context: dps-production-deployments
         requires:
