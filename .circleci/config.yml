@@ -151,6 +151,14 @@ jobs:
               --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}" \
               --set image.tag="${APP_VERSION}"
 
+  deploy_prod:
+    steps:
+      - run:
+          name: Demo prod deployment 
+          command: |
+            echo "${test_prod_variable}"
+
+
 workflows:
   version: 2
   build_test_deploy:
@@ -172,3 +180,11 @@ workflows:
     - deploy_dev:
         requires:
           - copy_image_to_ecs
+    - request-prod-approval:
+          type: approval
+          requires:
+            - deploy_dev
+    - deploy_prod:
+        context: dps-production-deployments
+        requires:
+          - request-prod-approval
